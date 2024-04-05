@@ -1,0 +1,21 @@
+{
+  "name": "silver-micro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alban-martinant-de-preneuf/silver-micro.git"
+  },
+  "author": "Alban Martinant de Préneuf",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alban-martinant-de-preneuf/silver-micro/issues"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
