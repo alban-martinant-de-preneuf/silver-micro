@@ -10,8 +10,8 @@ const userRoutes = require('./routes/user')
 mongoose.connect('mongodb://localhost:27017/silver_micro?retryWrites=true&w=majority',
     {
         authSource: 'admin',
-        user: "mongadmin",
-        pass: "password123"
+        user: process.env.MONGO_USER,
+        pass: process.env.MONGO_PWD
     })
     .then(() => console.log('Connexion à MongoDB réussie.'))
     .catch((e) => console.log('Connexion à MongoBD échouée !', e));
