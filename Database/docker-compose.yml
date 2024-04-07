@@ -1,7 +1,7 @@
 services:
   mongo: 
     image: mongo:7.0
-    container_name: container_silver_micro_db
+    container_name: silver_micro_db
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongadmin
       MONGO_INITDB_ROOT_PASSWORD: password123
