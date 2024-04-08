@@ -56,7 +56,6 @@ exports.login = (req, res, next) => {
 
 exports.logout = async (req, res, next) => {
     try {
-        console.log(req.cookie);
         const expirationDate = new Date(Date.now() + 24 * 3600 * 1000);
         const blacklistToken = new BlacklistToken({
             token: req.cookies.token,

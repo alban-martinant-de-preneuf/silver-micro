@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const BlacklistToken = require('../models/BlacklistToken');
+const BlacklistToken = require('../models/blacklistToken');
 
 async function isTokenBlacklisted(token) {
     const blacklistedToken = await BlacklistToken.findOne({ token: token });
@@ -9,6 +9,9 @@ async function isTokenBlacklisted(token) {
 module.exports = async (req, res, next) => {
     try {
         const token = req.cookies.token;
+        if (!token) {
+            throw 'Token manquant';
+        }
         if (await isTokenBlacklisted(token)) {
             throw 'Token invalide';
         }
