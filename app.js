@@ -28,6 +28,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/api/auth', userRoutes);
+app.use('/auth', userRoutes);
 
 module.exports = app;
