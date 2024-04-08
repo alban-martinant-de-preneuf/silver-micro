@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const BlacklistToken = require('../models/blacklistToken');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
@@ -52,3 +53,19 @@ exports.login = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ error }))
 }
+
+exports.logout = async (req, res, next) => {
+    try {
+        const expirationDate = new Date(Date.now() + 24 * 3600 * 1000);
+        const blacklistToken = new BlacklistToken({
+            token: req.cookies.token,
+            expirationDate: expirationDate
+        });
+
+        await blacklistToken.save();
+
+        res.status(200).json({ message: 'Utilisateur déconnecté' });
+    } catch (error) {
+        res.clearCookie('token').status(400).json({ error: error.message });
+    }
+};
