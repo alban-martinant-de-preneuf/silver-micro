@@ -7,6 +7,7 @@ require('dotenv').config();
 const app = express();
 
 const userRoutes = require('./routes/user')
+const restaurantRoutes = require('./routes/restaurant')
 
 mongoose.connect('mongodb://localhost:27017/silver_micro?retryWrites=true&w=majority',
     {
@@ -29,5 +30,6 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/auth', userRoutes);
+app.use('/restaurants', restaurantRoutes);
 
 module.exports = app;
