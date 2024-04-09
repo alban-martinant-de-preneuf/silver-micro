@@ -5,7 +5,8 @@ const restaurantSchema = mongoose.Schema({
     name: { type: String, required: true, unique: true },
     address: { type: String, required: true },
     postal_code: { type: String, required: true },
-    city: { type: String, required: true }
+    city: { type: String, required: true },
+    tables: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Table' }]
 });
 
 module.exports = mongoose.model('Restaurant', restaurantSchema);
