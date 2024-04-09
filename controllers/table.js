@@ -25,3 +25,9 @@ exports.getAllTablesOfRestaurant = (req, res, next) => {
         .then(restaurant => res.status(200).json(restaurant.tables))
         .catch(error => res.status(400).json({ error }));
 }
+
+exports.getOneTable = (req, res, next) => {
+    Table.findOne({ _id: req.params.id })
+        .then(table => res.status(200).json(table))
+        .catch(error => res.status(404).json({ error }));
+}

@@ -8,6 +8,7 @@ const app = express();
 
 const userRoutes = require('./routes/user')
 const restaurantRoutes = require('./routes/restaurant')
+const tableRoutes = require('./routes/table')
 
 mongoose.connect('mongodb://localhost:27017/silver_micro?retryWrites=true&w=majority',
     {
@@ -31,5 +32,6 @@ app.use(cookieParser());
 
 app.use('/auth', userRoutes);
 app.use('/restaurants', restaurantRoutes);
+app.use('/tables', tableRoutes);
 
 module.exports = app;
