@@ -3,6 +3,7 @@ const router = express.Router();
 
 const restaurantCtrl = require('../controllers/restaurant');
 const tableCtrl = require('../controllers/table');
+const availabilityCtrl = require('../controllers/availability');
 const auth = require('../middleware/auth');
 
 router.get('/', auth, restaurantCtrl.getAllRestaurants);
@@ -11,6 +12,7 @@ router.get('/:id', auth, restaurantCtrl.getOneRestaurant);
 router.post('/register', auth, restaurantCtrl.register);
 router.post('/:restaurantId/table', auth, tableCtrl.createTable);
 
+router.post('/:restaurantId/availability', auth, availabilityCtrl.createAvailability);
 // todo
 // router.put('/:id', auth, restaurantCtrl.updateRestaurant);
 // router.put('/:id/table/:tableId', auth, tableCtrl.updateTable);
