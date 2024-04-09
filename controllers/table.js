@@ -17,3 +17,11 @@ exports.createTable = (req, res, next) => {
         })
         .catch(error => res.status(400).json({ error }));
 }
+
+exports.getAllTablesOfRestaurant = (req, res, next) => {
+    const restaurant = Restaurant.findOne({ _id: req.params.restaurantId })
+        .select('tables')
+        .populate('tables')
+        .then(restaurant => res.status(200).json(restaurant.tables))
+        .catch(error => res.status(400).json({ error }));
+}
