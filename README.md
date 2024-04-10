@@ -98,7 +98,7 @@ Code : 200 OK
 
 ### Créer un restaurant (POST /restaurants/register)
 
-Crée un nouveau restaurant.
+Crée un nouveau restaurant. L'utilisateur doit être connecté pour effectuer cette action. L'utilisateur connecté est automatiquement associé au restaurant créé en tant que propriétaire.
 
 #### Paramètres de la requête
 
@@ -185,7 +185,7 @@ Code : 200 OK
 
 ### Créer une table pour un restaurant (POST /restaurants/:restaurantId/tables)
 
-Crée une nouvelle table pour un restaurant spécifique.
+Crée une nouvelle table pour un restaurant spécifique. L'utilisateur doit être connecté pour effectuer cette action. L'utilisateur connecté doit être le propriétaire du restaurant pour effectuer cette action.
 
 #### Paramètres de la requête
 
@@ -243,6 +243,102 @@ Code : 200 OK
     }
 ]
 ```
+
+---
+
+### Ajouter une disponibilité à toute les tables d'un restaurant (POST /restaurants/:restaurantId/avalaibilities)
+
+Ajoute une disponibilité à toutes les tables d'un restaurant spécifique. L'utilisateur doit être connecté pour effectuer cette action. L'utilisateur connecté doit être le propriétaire du restaurant pour effectuer cette action.
+
+#### Paramètres de la requête
+
+| Nom         | Type   | Description         |
+|-------------|--------|---------------------|
+| startTime   | Date   | Date et heure de début de la disponibilité |
+| endTime     | Date   | Date et heure de fin de la disponibilité (facultatif, si non renseigné endTime = startTime + 1 heure) |
+
+#### Exemple de requête
+
+```json
+POST /restaurants/661668a8d877e79772fdd5db/avalaibilities
+Content-Type: application/json
+
+{
+    "startTime": "2024-05-08T19:00:00.000Z",
+    "endTime": "2024-05-08T20:00:00.000Z"
+}
+```
+#### Réponse réussie
+
+Code : 201 Created
+
+```json
+{
+    "message": "Disponibilité créée !"
+}
+```
+---
+
+### Récupérer une table à partir de son ID (GET /tables/:tableId)
+
+Récupère une table spécifique en fonction de son identifiant.
+
+#### Réponse réussie
+
+Code : 200 OK
+
+```json
+{
+    "_id": "661668a3d877e79772fdd5d6",
+    "capacity": 4,
+    "name": "Table 12",
+    "infos": "Coin tranquille près de la fenêtre",    "availabilities": [
+        "661668efd877e79772fdd5e7",
+        "66168369fec2d53ea2d145f6",
+        "66168371fec2d53ea2d14603",
+        "6616b1385b4eeb13ea8c07ab"
+    ],
+    "__v": 4
+}
+```
+
+---
+
+### Récupérer les disponibilités d'une table (GET /tables/:tableId/availabilities)
+
+Récupère les disponibilités d'une table spécifique en fonction de son identifiant.
+
+#### Réponse réussie
+
+Code : 200 OK
+
+```json
+[
+    {
+        "_id": "661668efd877e79772fdd5e7",
+        "startTime": "2024-04-14T19:00:00.000Z",
+        "endTime": "2024-04-14T20:00:00.000Z",
+        "status": "available",
+        "__v": 0
+    },
+    {
+        "_id": "66168369fec2d53ea2d145f6",
+        "startTime": "2024-04-14T20:00:00.000Z",
+        "endTime": "2024-04-14T21:00:00.000Z",
+        "status": "reserved",
+        "__v": 0
+    },
+    {
+        "_id": "66168371fec2d53ea2d14603",
+        "startTime": "2024-04-14T21:00:00.000Z",
+        "endTime": "2024-04-14T22:00:00.000Z",
+        "status": "pending",
+        "__v": 0
+    }
+]
+```
+
+
 
 À venir...
 
