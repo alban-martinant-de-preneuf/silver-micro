@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 const availabilitySchema = mongoose.Schema({
-    restaurant: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' },
-    dateTime: {
+    startTime: {
         type: Date,
         required: true,
         validate: {
@@ -12,8 +11,23 @@ const availabilitySchema = mongoose.Schema({
             message: 'La date doit être dans le futur !'
         }
     },
-    duration: { type: Number, required: true, min: 15, default: 60 },
-    tables: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Table' }]
+    endTime: {
+        type: Date,
+        required: true,
+        validate: {
+            validator: function (value) {
+                return value > this.startTime;
+            },
+            message: 'La date de fin doit être après la date de début !'
+        },
+        default: function () {
+            return new Date(this.startTime.getTime() + 3600000);
+        }
+    },
+    status: { type: String, enum: ['available', 'pending', 'confirmed'], default: 'available', required: true },
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    numberOfPeople: { type: Number, min: 1 },
+    infos: { type: String }
 })
 
 module.exports = mongoose.model('Availability', availabilitySchema);
