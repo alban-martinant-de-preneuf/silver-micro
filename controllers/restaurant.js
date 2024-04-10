@@ -1,5 +1,6 @@
 const Restaurant = require('../models/restaurant');
 const Availability = require('../models/availability');
+const User = require('../models/user');
 
 exports.register = (req, res, next) => {
     console.log(req.body);
@@ -10,6 +11,12 @@ exports.register = (req, res, next) => {
         postal_code: req.body.postal_code,
         city: req.body.city
     });
+    User.findByIdAndUpdate(req.auth.userId, { $set: { role: 'restaurant_owner' } }, { new: true })
+        .then(() => {
+            console.log("role updated")
+        }).catch((err) => {
+            console.error(err);
+        })
     restaurant.save()
         .then(() => res.status(201).json({ message: 'Restaurant créé !' }))
         .catch(error => res.status(400).json({ error }));
@@ -29,16 +36,14 @@ exports.getOneRestaurant = (req, res, next) => {
 
 exports.createAvailability = async (req, res, next) => {
     try {
-        console.log('createAvailability')
         const restaurant = await Restaurant.findOne({ _id: req.params.restaurantId }).select('tables').populate('tables');
-        console.log(restaurant.tables)
         for (const table of restaurant.tables) {
             const availability = new Availability({
                 startTime: req.body.startTime,
                 endTime: req.body.endTime,
             });
             await availability.save();
-            
+
             table.availabilities.push(availability._id);
 
             await table.save();
