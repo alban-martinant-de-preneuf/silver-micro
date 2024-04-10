@@ -24,7 +24,7 @@ const availabilitySchema = mongoose.Schema({
             return new Date(this.startTime.getTime() + 3600000);
         }
     },
-    status: { type: String, enum: ['available', 'pending', 'confirmed'], default: 'available', required: true },
+    status: { type: String, enum: ['available', 'pending', 'reserved'], default: 'available', required: true },
     owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     numberOfPeople: { type: Number, min: 1 },
     infos: { type: String }
