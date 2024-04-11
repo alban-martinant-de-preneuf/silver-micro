@@ -55,7 +55,6 @@ exports.getAvailabilities = (req, res, next) => {
             res.status(200).json(table.availabilities);
         })
         .catch(error => {
-            console.error('Error retrieving availabilities:', error.message);
-            res.status(400).json({ error: 'Failed to retrieve availabilities' });
+            res.status(400).json({ "error": error.message });
         });
 }
