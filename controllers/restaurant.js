@@ -1,6 +1,7 @@
 const Restaurant = require('../models/restaurant');
 const Availability = require('../models/availability');
 const User = require('../models/user');
+const availability = require('../models/availability');
 
 exports.register = (req, res, next) => {
     console.log(req.body);
@@ -53,4 +54,25 @@ exports.createAvailability = async (req, res, next) => {
     } catch (error) {
         res.status(400).json({ error });
     }
+}
+
+exports.getAvailabilities = (req, res, next) => {
+    const query = { restaurant: req.params.restaurantId };
+
+    if (req.query.startTime) {
+        query.startTime = { $gte: new Date(req.query.startTime) };
+    }
+    if (req.query.endTime) {
+        query.endTime = { $lte: new Date(req.query.endTime) };
+    }
+    if (req.query.status) {
+        query.status = req.query.status;
+    }
+    Availability.find(query)
+        .then(availabilities => {
+            res.status(200).json(availabilities);
+        })
+        .catch(error => {
+            res.status(400).json({ "error": error.message });
+        });
 }

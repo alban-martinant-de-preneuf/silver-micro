@@ -22,5 +22,9 @@ router.post(
     checks.isRestaurantOwner,
     restaurantCtrl.createAvailability
 );
+router.get(
+    '/:restaurantId/availabilities',
+    restaurantCtrl.getAvailabilities
+);
 
 module.exports = router;

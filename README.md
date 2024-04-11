@@ -278,6 +278,49 @@ Code : 201 Created
 }
 ```
 ---
+### Récupérer les disponibilités d'un restaurant (GET /restaurants/:restaurantId/availabilities)
+
+Récupère les disponibilités d'un restaurant spécifique.
+
+### Filtres de recherche
+
+Vous pouvez utiliser les paramètres de requête suivants pour filtrer les disponibilités :
+
+- startTime (optionnel) : Filtre les disponibilités pour afficher uniquement celles qui commencent après ou au moment spécifié. Le format de date accepté est ISO 8601 (par exemple, "2024-08-31T03:40:00.000Z").
+- endTime (optionnel) : Filtre les disponibilités pour afficher uniquement celles qui se terminent avant ou au moment spécifié. Le format de date accepté est également ISO 8601.
+- status (optionnel) : Filtre les disponibilités pour afficher uniquement celles qui ont un statut spécifique. Les valeurs possibles sont "available", "pending" et "reserved".
+
+#### Exemple de requête
+
+```json
+GET /restaurants/6616c1949130acadb907d1b2/availabilities?startTime=2024-05-08T20:00:00.000Z&status=available
+```
+
+#### Réponse réussie
+
+Code : 200 OK
+
+```json
+[
+    {
+        "_id": "661811d5128250ab0a4e6da3",
+        "startTime": "2024-05-08T20:00:00.000Z",
+        "endTime": "2024-05-08T21:00:00.000Z",
+        "status": "available",
+        "restaurant": "6616c1949130acadb907d1b2",
+        "--v": 0
+    },
+    {
+        "_id": "66181390128250ab0a4e6da5",
+        "startTime": "2024-05-08T21:00:00.000Z",
+        "endTime": "2024-05-08T22:00:00.000Z",
+        "status": "available",
+        "restaurant": "6616c1949130acadb907d1b2",
+        "--v": 0
+    }
+]
+```
+---
 
 ### Récupérer une table à partir de son ID (GET /tables/:tableId)
 
