@@ -1,6 +1,7 @@
 const Table = require('../models/table');
 const Restaurant = require('../models/restaurant');
 const Availability = require('../models/availability');
+const availability = require('../models/availability');
 
 exports.createTable = (req, res, next) => {
     const table = new Table({
@@ -35,13 +36,26 @@ exports.getOneTable = (req, res, next) => {
 }
 
 exports.getAvailabilities = (req, res, next) => {
-    console.log(req.params.tableId)
-    Table.findOne({ _id: req.params.tableId })
+    const query = { _id: req.params.tableId };
+
+    Table.findOne(query)
         .select('availabilities')
         .populate('availabilities')
         .then(table => {
-            console.log(table)
-            res.status(200).json(table.availabilities)
+            if (req.query.startTime) {
+                table.availabilities = table.availabilities.filter(availability => {
+                    return availability.startTime >= new Date(req.query.startTime);
+                });
+            }
+            if (req.query.endTime) {
+                table.availabilities = table.availabilities.filter(availability => {
+                    return availability.endTime <= new Date(req.query.endTime);
+                });
+            }
+            res.status(200).json(table.availabilities);
         })
-        .catch(error => res.status(400).json({ error }));
+        .catch(error => {
+            console.error('Error retrieving availabilities:', error.message);
+            res.status(400).json({ error: 'Failed to retrieve availabilities' });
+        });
 }

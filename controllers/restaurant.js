@@ -41,6 +41,7 @@ exports.createAvailability = async (req, res, next) => {
             const availability = new Availability({
                 startTime: req.body.startTime,
                 endTime: req.body.endTime,
+                restaurant: req.params.restaurantId
             });
             await availability.save();
 

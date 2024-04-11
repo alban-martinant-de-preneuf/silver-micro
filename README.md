@@ -308,6 +308,20 @@ Code : 200 OK
 
 Récupère les disponibilités d'une table spécifique en fonction de son identifiant.
 
+### Filtres de recherche
+
+Vous pouvez utiliser les paramètres de requête suivants pour filtrer les disponibilités :
+
+- startTime (optionnel) : Filtre les disponibilités pour afficher uniquement celles qui commencent après ou au moment spécifié. Le format de date accepté est ISO 8601 (par exemple, "2024-08-31T03:40:00.000Z").
+
+- endTime (optionnel) : Filtre les disponibilités pour afficher uniquement celles qui se terminent avant ou au moment spécifié. Le format de date accepté est également ISO 8601.
+
+#### Exemple de requête
+
+```json
+GET /tables/661668a3d877e79772fdd5d6/availabilities?startTime=2024-04-14T19:00:00.000Z&endTime=2024-04-14T21:00:00.000Z
+```
+
 #### Réponse réussie
 
 Code : 200 OK
@@ -315,7 +329,7 @@ Code : 200 OK
 ```json
 [
     {
-        "_id": "661668efd877e79772fdd5e7",
+        "_id": "661668efd877",
         "startTime": "2024-04-14T19:00:00.000Z",
         "endTime": "2024-04-14T20:00:00.000Z",
         "status": "available",
@@ -325,14 +339,7 @@ Code : 200 OK
         "_id": "66168369fec2d53ea2d145f6",
         "startTime": "2024-04-14T20:00:00.000Z",
         "endTime": "2024-04-14T21:00:00.000Z",
-        "status": "reserved",
-        "__v": 0
-    },
-    {
-        "_id": "66168371fec2d53ea2d14603",
-        "startTime": "2024-04-14T21:00:00.000Z",
-        "endTime": "2024-04-14T22:00:00.000Z",
-        "status": "pending",
+        "status": "available",
         "__v": 0
     }
 ]
