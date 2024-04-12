@@ -18,7 +18,7 @@ Crée un nouvel utilisateur.
 
 #### Exemple de requête
 
-```json
+```http
 POST /auth/signup
 Content-Type: application/json
 
@@ -54,7 +54,7 @@ Connecte un utilisateur existant.
 
 #### Exemple de requête
 
-```json
+```http
 POST /auth/login
 Content-Type: application/json
 
@@ -111,7 +111,7 @@ Crée un nouveau restaurant. L'utilisateur doit être connecté pour effectuer c
 
 #### Exemple de requête
 
-```json
+```http
 POST /restaurants/register
 Content-Type: application/json
 
@@ -197,7 +197,7 @@ Crée une nouvelle table pour un restaurant spécifique. L'utilisateur doit êtr
 
 #### Exemple de requête
 
-```json
+```http
 POST /restaurants/661668a8d877e79772fdd5db/tables
 Content-Type: application/json
 
@@ -259,7 +259,7 @@ Ajoute une disponibilité à toutes les tables d'un restaurant spécifique. L'ut
 
 #### Exemple de requête
 
-```json
+```http
 POST /restaurants/661668a8d877e79772fdd5db/avalaibilities
 Content-Type: application/json
 
@@ -292,7 +292,7 @@ Vous pouvez utiliser les paramètres de requête suivants pour filtrer les dispo
 
 #### Exemple de requête
 
-```json
+```http
 GET /restaurants/6616c1949130acadb907d1b2/availabilities?startTime=2024-05-08T20:00:00.000Z&status=available
 ```
 
@@ -361,7 +361,7 @@ Vous pouvez utiliser les paramètres de requête suivants pour filtrer les dispo
 
 #### Exemple de requête
 
-```json
+```http
 GET /tables/661668a3d877e79772fdd5d6/availabilities?startTime=2024-04-14T19:00:00.000Z&endTime=2024-04-14T21:00:00.000Z
 ```
 
