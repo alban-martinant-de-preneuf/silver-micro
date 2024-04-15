@@ -13,6 +13,18 @@ exports.isRestaurantOwner = async (req, res, next) => {
     }
 }
 
+exports.isAvailabilityUser = async (req, res, next) => {
+    try {
+        const availability = await Availability.findOne({ _id: req.params.id });
+        if (availability.user != req.auth.userId) {
+            throw 'Vous n\'êtes pas l\'utilisateur associé à cette disponibilité';
+        }
+        next();
+    } catch (error) {
+        res.status(401).json({ error });
+    }
+}
+
 exports.isAvailabilityOwner = async (req, res, next) => {
     try {
         const availabilitity = await Availability.findOne({ _id: req.params.id });

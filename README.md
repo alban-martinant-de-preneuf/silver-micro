@@ -388,9 +388,145 @@ Code : 200 OK
 ]
 ```
 
+## Réservations
 
+### Récupérer toutes les réservations d'un utilisateur (GET /reservations)
 
-À venir...
+Récupère toutes les réservations d'un utilisateur spécifique. L'utilisateur doit être connecté pour effectuer cette action.
+
+### filtres de recherche
+
+Vous pouvez utiliser les paramètres de requête suivants pour filtrer les réservations :
+
+- startTime (optionnel) : Filtre les réservations pour afficher uniquement celles qui commencent après ou au moment spécifié. Le format de date accepté est ISO 8601 (par exemple, "2024-08-31T03:40:00.000Z").
+- endTime (optionnel) : Filtre les réservations pour afficher uniquement celles qui se terminent avant ou au moment spécifié. Le format de date accepté est également ISO 8601.
+
+#### Exemple de requête
+
+```http
+GET /reservations?startTime=2024-05-08T20:00:00.000Z
+```
+
+#### Réponse réussie
+
+Code : 200 OK
+
+```json
+[
+    {
+        "_id": "66181390128250ab0a4e6da5",
+        "startTime": "2024-05-08T21:00:00.000Z",
+        "endTime": "2024-05-08T22:00:00.000Z",
+        "status": "reserved",
+        "restaurant": "6616c1949130acadb907d1b2",
+        "numberOfPeople": 3,
+        "user": "6616c1829130acadb907d1ae"
+    }
+]
+```
+
+### Récupérer une disponibilité à partir de son ID (GET /availabilities/:id)
+
+Récupère une disponibilité spécifique en fonction de son identifiant.
+
+#### exemple de requête
+
+```http
+GET /availabilities/661811d5128250ab0a4e6da3
+```
+
+#### Réponse réussie
+
+```json
+{
+  "_id": "661811d5128250ab0a4e6da3",
+  "startTime": "2024-05-08T20:00:00.000Z",
+  "endTime": "2024-05-08T21:00:00.000Z",
+  "status": "available",
+  "restaurant": "6616c1949130acadb907d1b2"
+}
+```
+
+### Réserver une disponibilité (POST /availabilities/:id/book)
+
+Réserve une disponibilité spécifique. L'utilisateur doit être connecté pour effectuer cette action.
+
+#### Paramètres de la requête
+
+| Nom             | Type   | Description         |
+|-----------------|--------|---------------------|
+| numberOfPeople  | Number | Nombre de personnes pour la réservation |
+| infos           | String | Informations complémentaires sur la réservation (facultatif) |
+
+#### Exemple de requête
+
+```http
+POST /availabilities/661811d5128250ab0a4e6da3/book
+content-Type: application/json
+
+{
+    "numberOfPeople": 2,
+    "infos": "Anniversaire de mariage"
+}
+```
+
+#### Réponse réussie
+
+Code : 201 Created
+
+```json
+{
+    "message": "Réservation effectuée !"
+}
+```
+
+### Annuler une réservation (DELETE /reservations/:id)
+
+Annule une réservation spécifique. L'utilisateur doit être connecté pour effectuer cette action. L'utilisateur connecté doit être l'utilisateur qui a effectué la réservation pour effectuer cette action.
+
+#### Réponse réussie
+
+Code : 200 OK
+
+```json
+{
+    "message": "Réservation annulée !"
+}
+```
+
+### Modifier une réservation (PUT /reservations/:id)
+
+Modifier une réservation spécifique. L'utilisateur doit être connecté pour effectuer cette action. L'utilisateur connecté doit être le propriétaire du restaurant associé à la réservation pour effectuer cette action.
+
+#### Paramètres de la requête
+
+| Nom             | Type   | Description         |
+|-----------------|--------|---------------------|
+| numberOfPeople  | Number | Nombre de personnes pour la réservation (facultatif)|
+| infos           | String | Informations complémentaires sur la réservation (facultatif) |
+| status          | String | Statut de la réservation (Peut prendre les valeurs "reserved", "pending" ou "available") (facultatif)|
+
+#### Exemple de requête
+
+```http
+PUT /reservations/66181390128250ab0a4e6da5
+content-Type: application/json
+
+{
+    "numberOfPeople": 4,
+    "infos": "Il faudra une chaise bébé"
+}
+```
+#### Réponse réussie
+
+Code : 200 OK
+
+```json
+{
+    "message": "Réservation modifiée !"
+}
+```
+
 
 ---
 
