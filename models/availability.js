@@ -26,7 +26,7 @@ const availabilitySchema = mongoose.Schema({
         }
     },
     status: { type: String, enum: ['available', 'pending', 'reserved'], default: 'available', required: true },
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     numberOfPeople: { type: Number, min: 1 },
     infos: { type: String },
     restaurant: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' }
