@@ -8,4 +8,4 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./silver_micro_db:/data/db
+      - ./data:/data/db
